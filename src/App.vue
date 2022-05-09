@@ -1,20 +1,22 @@
 <template>
-  <SimpleTable :dataSource="dataSource" :columns="columns" :rowKey="(row) => row.key" />
+  <Table :dataSource="dataSource" :columns="columns" :rowKey="(row) => row.key" />
 </template>
 
 <script lang="ts">
 import { ref, Ref } from "vue";
-import SimpleTable from "./components/table/SimpleTable";
+import Table from "./components/table/index";
 interface TableSource {
   key: number;
+  mark: number;
   name: string;
   age: number;
-  address: string;
+  major: string;
+  sex: string;
   tags: string[];
 }
 export default {
   components: {
-    SimpleTable,
+    Table,
   },
   setup() {
     let dataSource: Ref<TableSource[]> = ref([]);
@@ -22,8 +24,10 @@ export default {
       dataSource.value.push({
         key: index,
         name: `Edrward ${index}`,
-        age: 18 + index,
-        address: `London Park no. ${index}`,
+        age: Math.round(Math.random()*60+10),
+        mark: Math.round(Math.random()*100+50),
+        major: Math.round(Math.random()) ? '计算机':'体育',
+        sex: Math.round(Math.random()) ? '男':'女',
         tags: ["nice", "developer"],
       });
     }
@@ -36,12 +40,22 @@ export default {
       {
         title: "年龄",
         key: "age",
+        isSort:'true'
       },
       {
-        title: "住址",
-        key: "address",
+        title:'性别',
+        key:'sex',
+      },
+      {
+          title: "分数",
+          key: "mark",
+          isSort:'true'
+      },
+      {
+        title: "专业",
+        key: "major",
         render: (value: any) => {
-          return value.address;
+          return value.major;
         },
       },
     ]);
