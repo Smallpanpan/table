@@ -12,7 +12,6 @@ interface TableSource {
   age: number;
   major: string;
   sex: string;
-  tags: string[];
 }
 export default {
   components: {
